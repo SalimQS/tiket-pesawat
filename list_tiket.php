@@ -160,19 +160,19 @@ $maskapaiUnik = $pdo->query('SELECT DISTINCT airline FROM flights ORDER BY airli
                                 <p class="text-lg font-semibold text-gray-600"><?= sanitize($flight['destination_code']) ?></p>
                             </div>
 
-                            <div class="ml-0 md:ml-8">
+                            <div class="ml-0 md:ml-8 space-y-2 text-sm">
                                 <?php if (!isLoggedIn()): ?>
                                     <a href="login.php?redirect=<?= urlencode($_SERVER['REQUEST_URI'] ?? 'list_tiket.php') ?>" class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg text-md transition duration-300 shadow-lg">
                                         Masuk untuk Pesan
                                     </a>
                                 <?php else: ?>
-                                    <form action="purchase.php" method="POST">
-                                        <input type="hidden" name="flight_id" value="<?= (int) $flight['id'] ?>">
-                                        <input type="hidden" name="redirect" value="<?= sanitize($_SERVER['REQUEST_URI'] ?? 'list_tiket.php') ?>">
-                                        <button type="submit" class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg text-md transition duration-300 shadow-lg">
-                                            Pesan Sekarang
-                                        </button>
-                                    </form>
+                                    <a href="ticket_detail.php?flight_id=<?= (int) $flight['id'] ?>" class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg text-md transition duration-300 shadow-lg text-center w-full">
+                                        Lihat Detail &amp; Pesan
+                                    </a>
+                                    <?php if ((int) $user['credit'] < (int) $flight['price']): ?>
+                                        <p class="text-red-600 flex items-center space-x-2"><i class="fas fa-exclamation-triangle"></i><span>Kredit kurang dari harga tiket ini. Silakan deposit.</span></p>
+                                        <a class="inline-block text-indigo-600 hover:text-indigo-800 font-semibold" href="deposit.php"><i class="fas fa-wallet mr-2"></i>Deposit sekarang</a>
+                                    <?php endif; ?>
                                 <?php endif; ?>
                             </div>
                         </div>

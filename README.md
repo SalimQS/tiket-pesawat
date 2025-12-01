@@ -17,8 +17,8 @@ Database SQLite akan otomatis dibuat di `storage/app.sqlite` beserta data:
 ## Fitur utama
 - **Pencarian tiket** berdasarkan asal, tujuan, tanggal, maskapai, dan harga maksimum.
 - **Login & Registrasi** dengan hash kata sandi dan kredit awal Rp 5.000.000 per pengguna baru.
-- **Pemesanan** membutuhkan login dan memotong kredit sesuai harga tiket.
-- **Top up saldo** dengan form metode pembayaran dummy; saldo langsung bertambah tanpa proses pembayaran nyata.
+- **Pemesanan** membutuhkan login dan memotong kredit sesuai harga tiket dengan halaman konfirmasi detail tiket terlebih dahulu.
+- **Deposit saldo** dengan form metode pembayaran dummy; saldo langsung bertambah tanpa proses pembayaran nyata.
 - **Profil** untuk mengubah nama, username, dan kata sandi.
 - **Dashboard** menampilkan saldo kredit dan riwayat pemesanan.
 - **Generator harian** memastikan jadwal 7 hari ke depan tersedia; jika aplikasi baru dijalankan setelah sehari terlewat, jadwal diperbarui otomatis.
@@ -29,7 +29,7 @@ Database SQLite akan otomatis dibuat di `storage/app.sqlite` beserta data:
 - `src/` – helper dan logika generator penerbangan.
 - `templates/` – template header/footer yang digunakan halaman utama.
 - `storage/` – lokasi file database SQLite (dibuat otomatis).
-- Halaman utama: `index.php`, `list_tiket.php`, `login.php`, `register.php`, `dashboard.php`, `profile.php`, `topup.php`, `purchase.php`, `logout.php`.
+- Halaman utama: `index.php`, `list_tiket.php`, `login.php`, `register.php`, `dashboard.php`, `profile.php`, `deposit.php`, `ticket_detail.php`, `purchase.php`, `logout.php`.
 
 ## Catatan
 - Harga tiket dihasilkan otomatis antara Rp 600.000 hingga Rp 4.000.000 dengan variasi per maskapai (mis. Garuda Indonesia lebih mahal).

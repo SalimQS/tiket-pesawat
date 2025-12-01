@@ -21,7 +21,7 @@ if (!$flight) {
 }
 
 if ((int) $user['credit'] < (int) $flight['price']) {
-    $_SESSION['error'] = 'Saldo kredit tidak mencukupi untuk melakukan pemesanan ini.';
+    $_SESSION['error'] = 'Saldo kredit tidak mencukupi untuk melakukan pemesanan ini. Silakan lakukan deposit.';
     header('Location: ' . $redirect);
     exit();
 }

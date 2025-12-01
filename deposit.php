@@ -3,7 +3,7 @@ require_once __DIR__ . '/bootstrap.php';
 requireLogin();
 
 $user = currentUser($pdo);
-$pageTitle = 'Top Up Saldo';
+$pageTitle = 'Deposit Saldo';
 
 $flashSuccess = $_SESSION['success'] ?? null;
 $flashError = $_SESSION['error'] ?? null;
@@ -16,9 +16,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $note = trim($_POST['note'] ?? '');
 
     if ($amount <= 0) {
-        $flashError = 'Nominal top up harus lebih besar dari 0.';
+        $flashError = 'Nominal deposit harus lebih besar dari 0.';
     } elseif ($method === '') {
-        $flashError = 'Pilih metode pembayaran untuk melanjutkan top up.';
+        $flashError = 'Pilih metode pembayaran untuk melanjutkan deposit.';
     } else {
         $pdo->beginTransaction();
         try {
@@ -31,12 +31,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ]);
 
             $pdo->commit();
-            $_SESSION['success'] = 'Top up sebesar ' . formatRupiah($amount) . ' via ' . $method . ' berhasil. Saldo langsung bertambah.';
-            header('Location: topup.php');
+            $_SESSION['success'] = 'Deposit sebesar ' . formatRupiah($amount) . ' via ' . $method . ' berhasil. Saldo langsung bertambah.';
+            header('Location: deposit.php');
             exit();
         } catch (Throwable $exception) {
             $pdo->rollBack();
-            $flashError = 'Gagal memproses top up. Silakan coba lagi.';
+            $flashError = 'Gagal memproses deposit. Silakan coba lagi.';
         }
     }
 
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php include __DIR__ . '/templates/header.php'; ?>
     <div class="max-w-3xl mx-auto">
         <div class="bg-white p-6 rounded-lg shadow mb-6">
-            <h2 class="text-2xl font-bold mb-2">Top Up Saldo</h2>
+            <h2 class="text-2xl font-bold mb-2">Deposit Saldo</h2>
             <p class="text-gray-600 mb-4">Isi ulang kredit Anda secara instan. Proses ini dummy: saldo langsung bertambah tanpa pembayaran nyata.</p>
             <div class="flex items-center space-x-4 p-4 bg-indigo-50 rounded-lg">
                 <div class="flex-1">
@@ -71,16 +71,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             <?php endif; ?>
 
-            <form action="topup.php" method="POST" class="space-y-4">
+            <form action="deposit.php" method="POST" class="space-y-4">
                 <div>
-                    <label for="amount" class="block text-sm font-medium text-gray-700 mb-1">Nominal Top Up</label>
+                    <label for="amount" class="block text-sm font-medium text-gray-700 mb-1">Nominal Deposit</label>
                     <div class="relative rounded-md shadow-sm">
                         <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                             <span class="text-gray-500 sm:text-sm">Rp</span>
                         </div>
                         <input type="number" min="10000" step="10000" id="amount" name="amount" required class="block w-full rounded-md border-gray-300 pl-10 focus:border-indigo-500 focus:ring-indigo-500 p-3" placeholder="500000">
                     </div>
-                    <p class="text-xs text-gray-500 mt-1">Minimal top up Rp10.000. Angka tanpa titik/koma.</p>
+                    <p class="text-xs text-gray-500 mt-1">Minimal deposit Rp10.000. Angka tanpa titik/koma.</p>
                 </div>
                 <div>
                     <label for="method" class="block text-sm font-medium text-gray-700 mb-1">Metode Pembayaran</label>
@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <p class="text-xs text-gray-500 mt-1">Informasi ini hanya simulasi dan tidak divalidasi.</p>
                 </div>
                 <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg text-md transition duration-300 shadow-lg">
-                    <i class="fas fa-plus-circle mr-2"></i>Top Up Sekarang
+                    <i class="fas fa-plus-circle mr-2"></i>Deposit Sekarang
                 </button>
             </form>
         </div>
