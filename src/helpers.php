@@ -57,6 +57,7 @@ function airportCatalog(): array
         ['code' => 'JOG', 'city' => 'Yogyakarta', 'name' => 'Yogyakarta International'],
         ['code' => 'SRG', 'city' => 'Semarang', 'name' => 'Ahmad Yani'],
         ['code' => 'BPN', 'city' => 'Balikpapan', 'name' => 'Sultan Aji Muhammad Sulaiman'],
+        ['code' => 'BDJ', 'city' => 'Banjarmasin', 'name' => 'Syamsudin Noor'],
         ['code' => 'PLM', 'city' => 'Palembang', 'name' => 'Sultan Mahmud Badaruddin II'],
         ['code' => 'LOP', 'city' => 'Lombok', 'name' => 'Zainuddin Abdul Madjid'],
         ['code' => 'PDG', 'city' => 'Padang', 'name' => 'Minangkabau'],

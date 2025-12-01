@@ -5,7 +5,15 @@ $asal = $_GET['asal'] ?? null;
 $tujuan = $_GET['tujuan'] ?? null;
 $tanggal = $_GET['tanggal'] ?? null;
 $maskapai = $_GET['maskapai'] ?? null;
-$hargaMax = isset($_GET['harga_max']) ? (int) $_GET['harga_max'] : null;
+$hargaInput = $_GET['harga_max'] ?? null;
+$hargaMax = null;
+
+if ($hargaInput !== null && $hargaInput !== '') {
+    $hargaMax = (int) preg_replace('/\D+/', '', (string) $hargaInput);
+    if ($hargaMax <= 0) {
+        $hargaMax = null;
+    }
+}
 
 if (!$asal || !$tujuan || !$tanggal) {
     header('Location: index.php');
@@ -13,7 +21,9 @@ if (!$asal || !$tujuan || !$tanggal) {
 }
 
 $user = currentUser($pdo);
+$airports = airportCatalog();
 $pageTitle = 'Hasil Pencarian';
+$today = (new DateTimeImmutable('today'))->format('Y-m-d');
 
 $params = [
     'asal' => $asal,
@@ -69,7 +79,7 @@ $maskapaiUnik = $pdo->query('SELECT DISTINCT airline FROM flights ORDER BY airli
 
                     <div>
                         <label for="harga_max" class="block text-sm font-medium text-gray-700 mb-1">Harga Maksimal (Rp)</label>
-                        <input type="number" id="harga_max" name="harga_max" min="0" placeholder="Contoh: 1500000" value="<?= $hargaMax && $hargaMax > 0 ? sanitize((string) $hargaMax) : '' ?>" class="w-full border border-gray-300 rounded-lg p-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        <input type="number" id="harga_max" name="harga_max" min="0" placeholder="Contoh: 1500000" value="<?= $hargaMax !== null ? sanitize((string) $hargaMax) : '' ?>" class="w-full border border-gray-300 rounded-lg p-2 focus:ring-indigo-500 focus:border-indigo-500">
                     </div>
 
                     <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 rounded-lg transition duration-300">
@@ -80,6 +90,41 @@ $maskapaiUnik = $pdo->query('SELECT DISTINCT airline FROM flights ORDER BY airli
         </div>
 
         <div class="lg:col-span-3 space-y-4">
+            <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+                <h2 class="text-xl font-bold mb-4 text-gray-800 flex items-center">
+                    <i class="fas fa-search mr-2 text-indigo-600"></i> Cari Tiket Lain
+                </h2>
+                <form action="list_tiket.php" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div>
+                        <label for="asal_re" class="block text-sm font-semibold text-gray-700 mb-1">Dari</label>
+                        <select id="asal_re" name="asal" required class="w-full border border-gray-300 rounded-lg p-3 focus:ring-indigo-500 focus:border-indigo-500">
+                            <option value="">Pilih kota asal</option>
+                            <?php foreach ($airports as $airport): ?>
+                                <option value="<?= sanitize($airport['code']) ?>" <?= $airport['code'] === $asal ? 'selected' : '' ?>><?= sanitize($airport['city']) ?> (<?= sanitize($airport['code']) ?>)</option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="tujuan_re" class="block text-sm font-semibold text-gray-700 mb-1">Ke</label>
+                        <select id="tujuan_re" name="tujuan" required class="w-full border border-gray-300 rounded-lg p-3 focus:ring-indigo-500 focus:border-indigo-500">
+                            <option value="">Pilih kota tujuan</option>
+                            <?php foreach ($airports as $airport): ?>
+                                <option value="<?= sanitize($airport['code']) ?>" <?= $airport['code'] === $tujuan ? 'selected' : '' ?>><?= sanitize($airport['city']) ?> (<?= sanitize($airport['code']) ?>)</option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="tanggal_re" class="block text-sm font-semibold text-gray-700 mb-1">Tanggal Berangkat</label>
+                        <input type="date" id="tanggal_re" name="tanggal" required value="<?= sanitize($tanggal) ?>" min="<?= $today ?>" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <div class="flex items-end">
+                        <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-lg text-lg transition duration-300 shadow-md">
+                            <i class="fas fa-search mr-2"></i> Cari
+                        </button>
+                    </div>
+                </form>
+            </div>
+
             <?php if (count($flights) > 0): ?>
                 <?php foreach ($flights as $flight): ?>
                     <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 border border-gray-200">
