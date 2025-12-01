@@ -22,7 +22,12 @@ $bookings = $stmt->fetchAll();
                 <p class="font-semibold mb-4">@<?= sanitize($user['username']) ?></p>
                 <p class="text-sm text-gray-500">Saldo Kredit</p>
                 <p class="text-2xl font-bold text-indigo-600"><?= formatRupiah((int) $user['credit']) ?></p>
-                <a href="profile.php" class="inline-block mt-4 bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Kelola Profil</a>
+                <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-3 mt-4 space-y-2 sm:space-y-0">
+                    <a href="topup.php" class="inline-block bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 text-center">
+                        Top Up Saldo
+                    </a>
+                    <a href="profile.php" class="inline-block bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 text-center">Kelola Profil</a>
+                </div>
             </div>
         </div>
         <div class="lg:col-span-2">

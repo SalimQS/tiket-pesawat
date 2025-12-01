@@ -23,6 +23,7 @@
                     <?php if (isLoggedIn()): ?>
                         <span class="text-sm text-gray-600 hidden md:block">Saldo: <strong><?= formatRupiah((int) $user['credit']) ?></strong></span>
                         <a href="dashboard.php" class="text-gray-600 hover:text-indigo-600 font-medium">Dashboard</a>
+                        <a href="topup.php" class="text-gray-600 hover:text-indigo-600 font-medium">Top Up</a>
                         <a href="profile.php" class="text-gray-600 hover:text-indigo-600 font-medium">Profil</a>
                         <a href="logout.php" class="text-gray-600 hover:text-red-600 font-medium">Keluar</a>
                         <span class="inline-flex items-center px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm font-semibold">
