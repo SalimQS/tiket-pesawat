@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= isset($pageTitle) ? sanitize($pageTitle) . ' - ' : '' ?>Pesawatin</title>
+    <title><?= isset($pageTitle) ? sanitize($pageTitle) . ' - ' : '' ?>Tiket Kereta</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
@@ -16,7 +16,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex-shrink-0">
-                    <a href="index.php" class="text-2xl font-bold text-indigo-600">Pesawatin</a>
+                    <a href="index.php" class="text-2xl font-bold text-indigo-600">Tiket Kereta</a>
                 </div>
 
                 <div class="flex items-center space-x-4">

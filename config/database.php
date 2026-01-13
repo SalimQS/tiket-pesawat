@@ -35,14 +35,14 @@ function initializeDatabase(PDO $pdo): void
     );
 
     $pdo->exec(
-        'CREATE TABLE IF NOT EXISTS flights (
+        'CREATE TABLE IF NOT EXISTS trains (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             origin_code TEXT NOT NULL,
             origin_city TEXT NOT NULL,
             destination_code TEXT NOT NULL,
             destination_city TEXT NOT NULL,
-            airline TEXT NOT NULL,
-            flight_code TEXT NOT NULL,
+            operator TEXT NOT NULL,
+            train_code TEXT NOT NULL,
             departure_time TEXT NOT NULL,
             arrival_time TEXT NOT NULL,
             price INTEGER NOT NULL,
@@ -54,17 +54,17 @@ function initializeDatabase(PDO $pdo): void
         'CREATE TABLE IF NOT EXISTS bookings (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             user_id INTEGER NOT NULL,
-            flight_id INTEGER NOT NULL,
+            train_id INTEGER NOT NULL,
             passenger_name TEXT NOT NULL,
             status TEXT NOT NULL DEFAULT "confirmed",
             created_at TEXT NOT NULL,
             FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,
-            FOREIGN KEY(flight_id) REFERENCES flights(id) ON DELETE CASCADE
+            FOREIGN KEY(train_id) REFERENCES trains(id) ON DELETE CASCADE
         )'
     );
 
     $pdo->exec(
-        'CREATE TABLE IF NOT EXISTS flight_generations (
+        'CREATE TABLE IF NOT EXISTS train_generations (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             generated_for_date TEXT NOT NULL UNIQUE,
             created_at TEXT NOT NULL

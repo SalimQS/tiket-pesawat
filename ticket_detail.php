@@ -1,45 +1,45 @@
 <?php
 require_once __DIR__ . '/bootstrap.php';
 
-$flightId = isset($_GET['flight_id']) ? (int) $_GET['flight_id'] : 0;
-if ($flightId <= 0) {
+$trainId = isset($_GET['train_id']) ? (int) $_GET['train_id'] : 0;
+if ($trainId <= 0) {
     header('Location: index.php');
     exit();
 }
 
-$flightStmt = $pdo->prepare('SELECT * FROM flights WHERE id = :id');
-$flightStmt->execute(['id' => $flightId]);
-$flight = $flightStmt->fetch();
+$trainStmt = $pdo->prepare('SELECT * FROM trains WHERE id = :id');
+$trainStmt->execute(['id' => $trainId]);
+$train = $trainStmt->fetch();
 
-if (!$flight) {
+if (!$train) {
     header('Location: index.php');
     exit();
 }
 
 $user = currentUser($pdo);
-$pageTitle = 'Detail Tiket ' . $flight['flight_code'];
+$pageTitle = 'Detail Tiket ' . $train['train_code'];
 $flashSuccess = $_SESSION['success'] ?? null;
 $flashError = $_SESSION['error'] ?? null;
 unset($_SESSION['success'], $_SESSION['error']);
 
-$durationHours = ceil((strtotime($flight['arrival_time']) - strtotime($flight['departure_time'])) / 3600);
-$redirect = $_SERVER['REQUEST_URI'] ?? 'ticket_detail.php?flight_id=' . $flightId;
+$durationHours = ceil((strtotime($train['arrival_time']) - strtotime($train['departure_time'])) / 3600);
+$redirect = $_SERVER['REQUEST_URI'] ?? 'ticket_detail.php?train_id=' . $trainId;
 ?>
 <?php include __DIR__ . '/templates/header.php'; ?>
     <div class="max-w-4xl mx-auto space-y-6">
         <div class="bg-white p-6 rounded-xl shadow border border-gray-200">
             <div class="flex justify-between items-start">
                 <div>
-                    <p class="text-xs uppercase text-gray-500">Kode Penerbangan</p>
+                    <p class="text-xs uppercase text-gray-500">Kode Kereta</p>
                     <h1 class="text-2xl font-bold text-gray-900 flex items-center space-x-2">
                         <i class="fas fa-ticket-alt text-indigo-600"></i>
-                        <span><?= sanitize($flight['flight_code']) ?></span>
+                        <span><?= sanitize($train['train_code']) ?></span>
                     </h1>
-                    <p class="text-gray-500 mt-1">Maskapai: <span class="font-semibold text-gray-800"><?= sanitize($flight['airline']) ?></span></p>
+                    <p class="text-gray-500 mt-1">Operator: <span class="font-semibold text-gray-800"><?= sanitize($train['operator']) ?></span></p>
                 </div>
                 <div class="text-right">
-                    <p class="text-sm text-gray-500">Harga per orang</p>
-                    <p class="text-3xl font-extrabold text-red-600"><?= formatRupiah((int) $flight['price']) ?></p>
+                    <p class="text-sm text-gray-500">Harga per penumpang</p>
+                    <p class="text-3xl font-extrabold text-red-600"><?= formatRupiah((int) $train['price']) ?></p>
                     <?php if ($user): ?>
                         <p class="text-xs text-gray-500 mt-1">Saldo Anda: <?= formatRupiah((int) $user['credit']) ?></p>
                     <?php else: ?>
@@ -51,20 +51,20 @@ $redirect = $_SERVER['REQUEST_URI'] ?? 'ticket_detail.php?flight_id=' . $flightI
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
                 <div class="p-4 bg-indigo-50 rounded-lg">
                     <p class="text-sm text-gray-500 mb-1">Berangkat</p>
-                    <p class="text-3xl font-bold text-gray-900"><?= sanitize(date('H:i', strtotime($flight['departure_time']))) ?></p>
-                    <p class="text-gray-700 font-semibold"><?= sanitize($flight['origin_city']) ?> (<?= sanitize($flight['origin_code']) ?>)</p>
-                    <p class="text-xs text-gray-500 mt-1">Tanggal: <?= sanitize(date('d M Y', strtotime($flight['departure_time']))) ?></p>
+                    <p class="text-3xl font-bold text-gray-900"><?= sanitize(date('H:i', strtotime($train['departure_time']))) ?></p>
+                    <p class="text-gray-700 font-semibold"><?= sanitize($train['origin_city']) ?> (<?= sanitize($train['origin_code']) ?>)</p>
+                    <p class="text-xs text-gray-500 mt-1">Tanggal: <?= sanitize(date('d M Y', strtotime($train['departure_time']))) ?></p>
                 </div>
                 <div class="p-4 bg-white rounded-lg border border-gray-200 flex flex-col justify-center text-center">
                     <p class="text-sm font-semibold text-gray-600">Durasi Perjalanan</p>
                     <p class="text-2xl font-bold text-gray-800 mt-1">~<?= $durationHours ?> jam</p>
-                    <p class="text-xs text-gray-500 mt-1">Non-stop</p>
+                    <p class="text-xs text-gray-500 mt-1">Langsung</p>
                 </div>
                 <div class="p-4 bg-indigo-50 rounded-lg text-right">
                     <p class="text-sm text-gray-500 mb-1">Tiba</p>
-                    <p class="text-3xl font-bold text-gray-900"><?= sanitize(date('H:i', strtotime($flight['arrival_time']))) ?></p>
-                    <p class="text-gray-700 font-semibold"><?= sanitize($flight['destination_city']) ?> (<?= sanitize($flight['destination_code']) ?>)</p>
-                    <p class="text-xs text-gray-500 mt-1">Tanggal: <?= sanitize(date('d M Y', strtotime($flight['arrival_time']))) ?></p>
+                    <p class="text-3xl font-bold text-gray-900"><?= sanitize(date('H:i', strtotime($train['arrival_time']))) ?></p>
+                    <p class="text-gray-700 font-semibold"><?= sanitize($train['destination_city']) ?> (<?= sanitize($train['destination_code']) ?>)</p>
+                    <p class="text-xs text-gray-500 mt-1">Tanggal: <?= sanitize(date('d M Y', strtotime($train['arrival_time']))) ?></p>
                 </div>
             </div>
         </div>
@@ -93,7 +93,7 @@ $redirect = $_SERVER['REQUEST_URI'] ?? 'ticket_detail.php?flight_id=' . $flightI
                     Masuk untuk Melanjutkan
                 </a>
             <?php else: ?>
-                <?php if ((int) $user['credit'] < (int) $flight['price']): ?>
+                <?php if ((int) $user['credit'] < (int) $train['price']): ?>
                     <div class="bg-red-50 border border-red-300 text-red-700 px-4 py-3 rounded" role="alert">
                         <p class="font-semibold flex items-center"><i class="fas fa-exclamation-triangle mr-2"></i>Saldo Anda kurang dari harga tiket.</p>
                         <p class="text-sm mt-1">Silakan lakukan deposit agar dapat memesan tiket ini.</p>
@@ -103,11 +103,11 @@ $redirect = $_SERVER['REQUEST_URI'] ?? 'ticket_detail.php?flight_id=' . $flightI
                     </a>
                 <?php else: ?>
                     <form action="purchase.php" method="POST" class="space-y-3">
-                        <input type="hidden" name="flight_id" value="<?= (int) $flight['id'] ?>">
+                        <input type="hidden" name="train_id" value="<?= (int) $train['id'] ?>">
                         <input type="hidden" name="redirect" value="<?= sanitize($redirect) ?>">
                         <div class="bg-indigo-50 border border-indigo-200 p-4 rounded-lg text-indigo-800">
-                            <p class="font-semibold">Harga tiket: <?= formatRupiah((int) $flight['price']) ?></p>
-                            <p class="text-sm">Saldo setelah pembelian diperkirakan: <?= formatRupiah((int) $user['credit'] - (int) $flight['price']) ?></p>
+                            <p class="font-semibold">Harga tiket: <?= formatRupiah((int) $train['price']) ?></p>
+                            <p class="text-sm">Saldo setelah pembelian diperkirakan: <?= formatRupiah((int) $user['credit'] - (int) $train['price']) ?></p>
                         </div>
                         <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg text-md transition duration-300 shadow-lg">
                             Konfirmasi &amp; Bayar dengan Kredit

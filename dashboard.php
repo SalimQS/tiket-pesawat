@@ -8,7 +8,7 @@ $flashSuccess = $_SESSION['success'] ?? null;
 $flashError = $_SESSION['error'] ?? null;
 unset($_SESSION['success'], $_SESSION['error']);
 
-$stmt = $pdo->prepare('SELECT bookings.*, flights.origin_city, flights.destination_city, flights.departure_time, flights.arrival_time, flights.airline, flights.price, flights.flight_code FROM bookings JOIN flights ON flights.id = bookings.flight_id WHERE bookings.user_id = :user_id ORDER BY bookings.created_at DESC');
+$stmt = $pdo->prepare('SELECT bookings.*, trains.origin_city, trains.destination_city, trains.departure_time, trains.arrival_time, trains.operator, trains.price, trains.train_code FROM bookings JOIN trains ON trains.id = bookings.train_id WHERE bookings.user_id = :user_id ORDER BY bookings.created_at DESC');
 $stmt->execute(['user_id' => $user['id']]);
 $bookings = $stmt->fetchAll();
 ?>
@@ -17,7 +17,7 @@ $bookings = $stmt->fetchAll();
         <div class="lg:col-span-1">
             <div class="bg-white p-6 rounded-lg shadow">
                 <h2 class="text-xl font-bold mb-2">Halo, <?= sanitize($user['name']) ?></h2>
-                <p class="text-gray-600 mb-4">Selamat datang kembali di Pesawatin.</p>
+                <p class="text-gray-600 mb-4">Selamat datang kembali di Tiket Kereta.</p>
                 <p class="text-sm text-gray-500">Username</p>
                 <p class="font-semibold mb-4">@<?= sanitize($user['username']) ?></p>
                 <p class="text-sm text-gray-500">Saldo Kredit</p>
@@ -50,10 +50,10 @@ $bookings = $stmt->fetchAll();
                         <?php foreach ($bookings as $booking): ?>
                             <div class="border border-gray-200 rounded-lg p-4 flex justify-between items-center">
                                 <div>
-                                    <p class="text-sm uppercase text-gray-500">Kode Penerbangan: <?= sanitize($booking['flight_code']) ?></p>
+                                    <p class="text-sm uppercase text-gray-500">Kode Kereta: <?= sanitize($booking['train_code']) ?></p>
                                     <h4 class="text-lg font-semibold text-gray-800"><?= sanitize($booking['origin_city']) ?> ➝ <?= sanitize($booking['destination_city']) ?></h4>
                                     <p class="text-sm text-gray-500">Berangkat: <?= sanitize(date('d M Y H:i', strtotime($booking['departure_time']))) ?></p>
-                                    <p class="text-sm text-gray-500">Maskapai: <?= sanitize($booking['airline']) ?></p>
+                                    <p class="text-sm text-gray-500">Operator: <?= sanitize($booking['operator']) ?></p>
                                     <p class="text-sm text-gray-500">Status: <?= sanitize($booking['status']) ?></p>
                                 </div>
                                 <div class="text-right">

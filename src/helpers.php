@@ -44,42 +44,34 @@ function sanitize(string $value): string
     return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
 }
 
-function airportCatalog(): array
+function stationCatalog(): array
 {
     return [
-        ['code' => 'CGK', 'city' => 'Jakarta', 'name' => 'Soekarno-Hatta'],
-        ['code' => 'HLP', 'city' => 'Jakarta', 'name' => 'Halim Perdanakusuma'],
-        ['code' => 'SUB', 'city' => 'Surabaya', 'name' => 'Juanda'],
-        ['code' => 'DPS', 'city' => 'Denpasar', 'name' => 'Ngurah Rai'],
-        ['code' => 'UPG', 'city' => 'Makassar', 'name' => 'Sultan Hasanuddin'],
-        ['code' => 'KNO', 'city' => 'Medan', 'name' => 'Kualanamu'],
-        ['code' => 'BDO', 'city' => 'Bandung', 'name' => 'Husein Sastranegara'],
-        ['code' => 'JOG', 'city' => 'Yogyakarta', 'name' => 'Yogyakarta International'],
-        ['code' => 'SRG', 'city' => 'Semarang', 'name' => 'Ahmad Yani'],
-        ['code' => 'BPN', 'city' => 'Balikpapan', 'name' => 'Sultan Aji Muhammad Sulaiman'],
-        ['code' => 'BDJ', 'city' => 'Banjarmasin', 'name' => 'Syamsudin Noor'],
-        ['code' => 'PLM', 'city' => 'Palembang', 'name' => 'Sultan Mahmud Badaruddin II'],
-        ['code' => 'LOP', 'city' => 'Lombok', 'name' => 'Zainuddin Abdul Madjid'],
-        ['code' => 'PDG', 'city' => 'Padang', 'name' => 'Minangkabau'],
-        ['code' => 'PKU', 'city' => 'Pekanbaru', 'name' => 'Sultan Syarif Kasim II'],
-        ['code' => 'MDC', 'city' => 'Manado', 'name' => 'Sam Ratulangi'],
-        ['code' => 'DJJ', 'city' => 'Jayapura', 'name' => 'Sentani'],
-        ['code' => 'TIM', 'city' => 'Timika', 'name' => 'Mozes Kilangin'],
-        ['code' => 'TRK', 'city' => 'Tarakan', 'name' => 'Juwata'],
-        ['code' => 'SOC', 'city' => 'Solo', 'name' => 'Adi Soemarmo'],
-        ['code' => 'PKY', 'city' => 'Palangkaraya', 'name' => 'Tjilik Riwut'],
+        ['code' => 'GMR', 'city' => 'Jakarta', 'name' => 'Gambir'],
+        ['code' => 'PSE', 'city' => 'Jakarta', 'name' => 'Pasar Senen'],
+        ['code' => 'BDG', 'city' => 'Bandung', 'name' => 'Bandung'],
+        ['code' => 'CBN', 'city' => 'Cirebon', 'name' => 'Cirebon'],
+        ['code' => 'PWT', 'city' => 'Purwokerto', 'name' => 'Purwokerto'],
+        ['code' => 'TGL', 'city' => 'Tegal', 'name' => 'Tegal'],
+        ['code' => 'SMT', 'city' => 'Semarang', 'name' => 'Tawang'],
+        ['code' => 'SLO', 'city' => 'Solo', 'name' => 'Balapan'],
+        ['code' => 'TGU', 'city' => 'Yogyakarta', 'name' => 'Tugu'],
+        ['code' => 'SBY', 'city' => 'Surabaya', 'name' => 'Gubeng'],
+        ['code' => 'MLG', 'city' => 'Malang', 'name' => 'Malang'],
+        ['code' => 'JBR', 'city' => 'Jember', 'name' => 'Jember'],
+        ['code' => 'BWX', 'city' => 'Banyuwangi', 'name' => 'Banyuwangi Baru'],
     ];
 }
 
-function airlinesCatalog(): array
+function trainOperatorsCatalog(): array
 {
     return [
-        ['name' => 'Garuda Indonesia', 'code' => 'GA', 'multiplier' => 2.8],
-        ['name' => 'Citilink', 'code' => 'QG', 'multiplier' => 1.2],
-        ['name' => 'Lion Air', 'code' => 'JT', 'multiplier' => 1.0],
-        ['name' => 'Batik Air', 'code' => 'ID', 'multiplier' => 1.4],
-        ['name' => 'Super Air Jet', 'code' => 'IU', 'multiplier' => 0.95],
-        ['name' => 'Sriwijaya Air', 'code' => 'SJ', 'multiplier' => 1.1],
+        ['name' => 'KAI Eksekutif', 'code' => 'KX', 'multiplier' => 2.0],
+        ['name' => 'KAI Bisnis', 'code' => 'KB', 'multiplier' => 1.6],
+        ['name' => 'KAI Ekonomi', 'code' => 'KE', 'multiplier' => 1.1],
+        ['name' => 'KAI Commuter', 'code' => 'KC', 'multiplier' => 0.7],
+        ['name' => 'Railink', 'code' => 'RL', 'multiplier' => 1.3],
+        ['name' => 'KAI Wisata', 'code' => 'KW', 'multiplier' => 2.4],
     ];
 }
 
