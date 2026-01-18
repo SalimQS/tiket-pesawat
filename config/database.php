@@ -56,7 +56,7 @@ function initializeDatabase(PDO $pdo): void
             user_id INTEGER NOT NULL,
             flight_id INTEGER NOT NULL,
             passenger_name TEXT NOT NULL,
-            status TEXT NOT NULL DEFAULT "confirmed",
+            status TEXT NOT NULL DEFAULT "diproses",
             created_at TEXT NOT NULL,
             FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,
             FOREIGN KEY(flight_id) REFERENCES flights(id) ON DELETE CASCADE

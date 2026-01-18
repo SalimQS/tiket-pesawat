@@ -21,7 +21,7 @@ if (!$flight) {
 }
 
 if ((int) $user['credit'] < (int) $flight['price']) {
-    $_SESSION['error'] = 'Saldo kredit tidak mencukupi untuk melakukan pemesanan ini. Silakan lakukan deposit.';
+    $_SESSION['error'] = 'Saldo kredit tidak mencukupi untuk melakukan pengajuan visa ini. Silakan lakukan deposit.';
     header('Location: ' . $redirect);
     exit();
 }
@@ -34,7 +34,7 @@ try {
         'user_id' => $user['id'],
         'flight_id' => $flight['id'],
         'passenger_name' => $user['name'],
-        'status' => 'confirmed',
+        'status' => 'diproses',
         'created_at' => $now,
     ]);
 
@@ -46,10 +46,10 @@ try {
     ]);
 
     $pdo->commit();
-    $_SESSION['success'] = 'Pemesanan berhasil. Kredit terpotong ' . formatRupiah((int) $flight['price']) . '.';
+    $_SESSION['success'] = 'Pengajuan visa berhasil. Kredit terpotong ' . formatRupiah((int) $flight['price']) . '.';
 } catch (Throwable $exception) {
     $pdo->rollBack();
-    $_SESSION['error'] = 'Gagal memproses pemesanan.';
+    $_SESSION['error'] = 'Gagal memproses pengajuan visa.';
 }
 
 header('Location: dashboard.php');
