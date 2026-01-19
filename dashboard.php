@@ -30,7 +30,7 @@ $latestBooking = $bookings[0] ?? null;
                 <span class="chip">@<?= sanitize($user['username']) ?></span>
             </div>
 
-            <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="mt-6 grid grid-cols-1 gap-3">
                 <div class="stat">
                     <p class="stat-label">Saldo Kredit</p>
                     <p class="stat-value"><?= formatRupiah((int) $user['credit']) ?></p>
